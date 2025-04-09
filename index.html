@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Phrase Print</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+        }
+        .wallet-container {
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .wallet-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .phrase-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        .phrase-list li {
+            font-size: 18px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .phrase-list li:last-child {
+            border-bottom: none;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+                margin: 0;
+                padding: 0;
+            }
+            .wallet-container {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+                padding: 40px;
+                text-align: center;
+            }
+            .input-container, button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <input type="text" id="wallet-name" placeholder="Enter Wallet Name">
+        <input type="text" id="wallet-phrases" placeholder="Enter 12 phrases separated by spaces">
+        <button onclick="generateWallet()">Generate</button>
+    </div>
+    <div class="wallet-container" id="wallet-container" style="display:none;">
+        <div class="wallet-title" id="display-wallet-name"></div>
+        <ul class="phrase-list" id="display-phrase-list"></ul>
+    </div>
+    <script>
+        function generateWallet() {
+            const walletName = document.getElementById('wallet-name').value;
+            const phrases = document.getElementById('wallet-phrases').value.split(' ');
+            if (walletName && phrases.length === 12) {
+                document.getElementById('display-wallet-name').textContent = walletName;
+                const phraseList = document.getElementById('display-phrase-list');
+                phraseList.innerHTML = '';
+                phrases.forEach((phrase, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${index + 1}. ${phrase}`;
+                    phraseList.appendChild(li);
+                });
+                document.getElementById('wallet-container').style.display = 'block';
+            } else {
+                alert('Please enter a wallet name and exactly 12 phrases.');
+            }
+        }
+    </script>
+</body>
+</html>
